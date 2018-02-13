@@ -3,6 +3,9 @@ package program;
 import client.tankerkoenig.TankerkoenigClient;
 import config.ApiConfig;
 import config.ConfigCreatedException;
+import config.DatabaseConfig;
+import config.GasstationConfig;
+import javafx.scene.chart.PieChart;
 import system.NotSupportedException;
 
 import java.io.IOException;
@@ -15,8 +18,13 @@ public class Program {
     public static void main(String[] args)
     {
         try {
-            TankerkoenigClient client = new TankerkoenigClient(new ApiConfig().getApiKey());
+            GasstationConfig gasstationConfig = new GasstationConfig();
 
+            DatabaseConfig databaseConfig = new DatabaseConfig();
+
+            ApiConfig apiConfig = new ApiConfig();
+
+            TankerkoenigClient client = new TankerkoenigClient(apiConfig.getApiKey());
 
         } catch (NotSupportedException e) {
             System.out.println(e.getMessage());
