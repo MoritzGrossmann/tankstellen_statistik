@@ -1,6 +1,8 @@
 package database;
 
 import client.Gasstation;
+import config.DatabaseConfig;
+import program.information.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,14 +13,9 @@ import java.sql.SQLException;
  */
 public class GasstationEntitites extends DatabaseHelper {
 
-    public GasstationEntitites(String host, String port, String database, String server_timezone, String user, String password)
+    public GasstationEntitites(DatabaseConfig databaseConfig, Logger logger)
     {
-        this.host = host;
-        this.port = port;
-        this.database = database;
-        this.server_timezone = server_timezone;
-        this.user= user;
-        this.password = password;
+        super(databaseConfig, logger);
     }
 
     public Gasstation push(Gasstation gasstation) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException

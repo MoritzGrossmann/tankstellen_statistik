@@ -1,13 +1,14 @@
 package program;
 
 import client.tankerkoenig.TankerkoenigClient;
-import config.ApiConfig;
-import config.ConfigCreatedException;
-import config.DatabaseConfig;
-import config.GasstationConfig;
-import javafx.scene.chart.PieChart;
+import config.*;
+import database.ConnectionTester;
+import database.DatabaseCreator;
+import org.apache.commons.cli.*;
+import program.cli.CliHandler;
 import system.NotSupportedException;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 
 /**
@@ -15,24 +16,63 @@ import java.io.IOException;
  */
 public class Program {
 
-    public static void main(String[] args)
-    {
+    public static final String PROGRAM_NAME = "Tankstellen-Statistik-Collector";
+
+    public static void main(String[] args) {
+        CommandLine commandLine;
+
+        CliHandler logger = new CliHandler();
+
+        DatabaseConfig databaseConfig;
+
         try {
-            GasstationConfig gasstationConfig = new GasstationConfig();
+            commandLine = new OptionHandler().parseOptions(args);
 
-            DatabaseConfig databaseConfig = new DatabaseConfig();
+            if (commandLine.hasOption("c"))
+            {
+                if (commandLine.hasOption("p"))
+                {
+                    new ConfigurationHandler().configure(logger);
+                } else {
+                    new ConfigurationHandler().purge(logger);
+                }
 
-            ApiConfig apiConfig = new ApiConfig();
+            }
 
-            TankerkoenigClient client = new TankerkoenigClient(apiConfig.getApiKey());
+            if (commandLine.hasOption("d"))
+            {
+                databaseConfig = DatabaseConfig.getInstance();
 
-        } catch (NotSupportedException e) {
-            System.out.println(e.getMessage());
+                if (!new ConnectionTester(databaseConfig, logger).testConnection())
+                {
+                    throw new ConfigNotValidException("No Connection to Database");
+                }
+
+                if (commandLine.hasOption("p")) {
+                    new DatabaseCreator(databaseConfig, logger).dropTables();
+                } else {
+                    new DatabaseCreator(databaseConfig, logger).create();
+                }
+            }
+
+            if (commandLine.hasOption("r"))
+            {
+                GasstationConfig gasstationConfig = new GasstationConfig();
+
+                databaseConfig = DatabaseConfig.getInstance();
+
+                ApiConfig apiConfig = ApiConfig.getInstance();
+            }
+        } catch (IllegalArgumentException e) {
+            System.exit(1);
         } catch (ConfigCreatedException e) {
-            System.out.println("No config file found\nCreating...\nconfigure Program and restart");
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Error while reading or writing files: " + e.getMessage());
+            e.printStackTrace();
+        } catch (NotSupportedException e) {
+            logger.printError(e.getMessage());
+        } catch (ConfigNotValidException e) {
+            System.exit(1);
         }
-
     }
 }

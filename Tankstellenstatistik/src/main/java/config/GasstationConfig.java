@@ -1,5 +1,7 @@
 package config;
 
+import program.cli.CliHandler;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import system.NotSupportedException;
 
 import java.io.IOException;
@@ -19,4 +21,8 @@ public class GasstationConfig extends Config {
     }
 
     private List<String> gasstations;
+
+    public void configurate(CliHandler cliHandler) throws NotSupportedException, IOException {
+        throw new NotImplementedException();
+    }
 }
