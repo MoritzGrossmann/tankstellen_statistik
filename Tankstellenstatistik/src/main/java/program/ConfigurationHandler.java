@@ -3,6 +3,7 @@ package program;
 import config.ApiConfig;
 import config.ConfigCreatedException;
 import config.DatabaseConfig;
+import config.GasstationConfig;
 import program.cli.CliHandler;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import system.NotSupportedException;
@@ -31,6 +32,14 @@ public class ConfigurationHandler {
         if (choice)
         {
             DatabaseConfig.getInstance().configurate(cliHandler);
+        }
+
+        cliHandler.printInformation("Do you want to configure the gasstations?");
+        choice = cliHandler.question();
+
+        if (choice)
+        {
+            GasstationConfig.getInstance().configurate(cliHandler);
         }
     }
 

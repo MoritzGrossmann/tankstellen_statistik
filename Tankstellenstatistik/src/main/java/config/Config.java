@@ -62,21 +62,21 @@ public abstract class Config {
     private void initialize(File file) throws IOException
     {
         BufferedWriter br = new BufferedWriter(new FileWriter(file, true));
-        br.write(String.format("%s=", ApiConfig.API_KEY_PROPERTY));
+        br.write(String.format("%s=xxx", ApiConfig.API_KEY_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", GasstationConfig.GASSTATIONS_PROPERTY));
+        br.write(String.format("%s=xxx", GasstationConfig.GASSTATIONS_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.HOST_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.HOST_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.PORT_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.PORT_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.NAME_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.NAME_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.USER_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.USER_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.PASSWORD_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.PASSWORD_PROPERTY));
         br.newLine();
-        br.write(String.format("%s=", DatabaseConfig.TIMEZONE_PROPERTY));
+        br.write(String.format("%s=xxx", DatabaseConfig.TIMEZONE_PROPERTY));
         br.flush();
         br.close();
 

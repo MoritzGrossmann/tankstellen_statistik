@@ -1,9 +1,11 @@
 package config;
 
+import org.apache.commons.lang3.StringUtils;
 import program.cli.CliHandler;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import system.NotSupportedException;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +16,14 @@ public class GasstationConfig extends Config {
 
     public static final String GASSTATIONS_PROPERTY = "GASSTATIONS";
 
-    public GasstationConfig() throws NotSupportedException, ConfigCreatedException, IOException {
+    private static GasstationConfig instance;
+
+    public static GasstationConfig getInstance() throws NotSupportedException, ConfigCreatedException, IOException {
+        if (instance == null) instance = new GasstationConfig();
+        return instance;
+    }
+
+    private GasstationConfig() throws NotSupportedException, ConfigCreatedException, IOException {
         Properties properties = getConfig();
         gasstations = new ArrayList<String>();
         gasstations.addAll(Arrays.asList(properties.getProperty(GASSTATIONS_PROPERTY).split(",")));
@@ -22,7 +31,46 @@ public class GasstationConfig extends Config {
 
     private List<String> gasstations;
 
+    public List<String> getGasstations() {
+        return gasstations;
+    }
+
     public void configurate(CliHandler cliHandler) throws NotSupportedException, IOException {
-        throw new NotImplementedException();
+
+        Properties properties = getConfig();
+
+        String gasstationstring = StringUtils.EMPTY;
+
+        cliHandler.printInformation("configure gasstations");
+
+        FileOutputStream fileOutputStream = new FileOutputStream(getConfigFile());
+
+        cliHandler.printInformation("please type uuid of gasstation:");
+        Gasstation<String> gasstation = new Gasstation<>(cliHandler.input());
+        if (!gasstation.isValid())cliHandler.printWarning("No valid gasstation");
+
+        gasstationstring += gasstation.getValue();
+
+        boolean continueWithGasstation = false;
+
+        cliHandler.printInformation("Do you want add more gasstation? [yes/no]");
+        continueWithGasstation = cliHandler.question();
+
+        while (continueWithGasstation)
+        {
+            cliHandler.printInformation("please type uuid of gasstation:");
+            gasstation = new Gasstation<>(cliHandler.input());
+            if (!gasstation.isValid())cliHandler.printWarning("No valid gasstation");
+
+            gasstationstring += ("," + gasstation.getValue());
+            cliHandler.printInformation("Do you want add more gasstation? [yes/no]");
+            continueWithGasstation = cliHandler.question();
+        }
+
+        properties.setProperty(GASSTATIONS_PROPERTY, gasstationstring);
+
+        properties.store(fileOutputStream, "");
+
+        fileOutputStream.close();
     }
 }

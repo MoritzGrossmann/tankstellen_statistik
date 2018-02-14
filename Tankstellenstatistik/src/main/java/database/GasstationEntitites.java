@@ -26,16 +26,15 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = "INSERT INTO ? (uuid, name, street, postcode, city) values (?,?,?,?,?)";
+        String sql = String.format("INSERT INTO %s (uuid, name, street, postcode, city) values (?,?,?,?,?)", GASSTATION_TABLE);
 
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-        statement.setString(1,GASSTATION_TABLE);
-        statement.setString(2,gasstation.getUuid());
-        statement.setString(3,gasstation.getName());
-        statement.setString(4,gasstation.getStreet());
-        statement.setString(5,gasstation.getPostcode());
-        statement.setString(6,gasstation.getCity());
+        statement.setString(1,gasstation.getUuid());
+        statement.setString(2,gasstation.getName());
+        statement.setString(3,gasstation.getStreet());
+        statement.setString(4,gasstation.getPostcode());
+        statement.setString(5,gasstation.getCity());
 
         statement.execute();
 
@@ -57,7 +56,7 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = "SELECT * FROM gasstation WHERE uuid = ?";
+        String sql = "SELECT * FROM " + GASSTATION_TABLE +  " WHERE uuid = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, key);
@@ -77,7 +76,7 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = "SELECT * FROM gasstation WHERE uuid = ?";
+        String sql = "SELECT * FROM " + GASSTATION_TABLE +  " WHERE uuid = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, key);

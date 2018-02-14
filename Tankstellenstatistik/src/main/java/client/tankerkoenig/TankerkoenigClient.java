@@ -1,5 +1,6 @@
 package client.tankerkoenig;
 
+import client.tankerkoenig.detail.DetailResponse;
 import client.tankerkoenig.price.PriceResponse;
 
 import javax.ws.rs.client.Client;
@@ -20,11 +21,15 @@ public class TankerkoenigClient {
 
     private final String PRICE_URL = URL + "/prices.php";
 
+    private final String DETAIL_URL = URL + "/detail.php";
+
     private final String API_KEY;
 
     private final String API_KEY_QUERYPARAM = "apikey";
 
     private final String IDS_QUERYPARAM = "ids";
+
+    private final String ID_QUERYPARAM = "id";
 
     public TankerkoenigClient(String apikey)
     {
@@ -58,5 +63,22 @@ public class TankerkoenigClient {
             keystring =keystring.concat(",");
         }
         return keystring.concat(keys.get(keys.size()));
+    }
+
+    public DetailResponse getDetails(String uuid)
+    {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(DETAIL_URL)
+                .queryParam(ID_QUERYPARAM, uuid)
+                .queryParam(API_KEY_QUERYPARAM, API_KEY);
+
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocationBuilder.get();
+
+        DetailResponse detailResponse = response.readEntity(DetailResponse.class);
+
+        client.close();
+
+        return detailResponse;
     }
 }
