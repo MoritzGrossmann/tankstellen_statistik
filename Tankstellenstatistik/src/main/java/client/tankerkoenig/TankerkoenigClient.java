@@ -1,21 +1,18 @@
 package client.tankerkoenig;
 
+import client.ApiClient;
 import client.tankerkoenig.detail.DetailResponse;
+import client.tankerkoenig.detail.Gasstation;
 import client.tankerkoenig.price.PriceResponse;
+import program.api.TankerkoenigApiClient;
+import program.cli.Logger;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mgrossmann on 13.02.2018.
  */
-public class TankerkoenigClient {
+public class TankerkoenigClient extends ApiClient implements TankerkoenigApiClient {
 
     private final String URL = "https://creativecommons.tankerkoenig.de/json";
 
@@ -31,25 +28,20 @@ public class TankerkoenigClient {
 
     private final String ID_QUERYPARAM = "id";
 
-    public TankerkoenigClient(String apikey)
+    public TankerkoenigClient(String apikey, Logger logger)
     {
         API_KEY = apikey;
+        this.logger = logger;
     }
 
-    private HashMap<String, client.tankerkoenig.price.Gasstation> getPrices(List<String> keys)
+    public Map<String, client.tankerkoenig.price.Gasstation> getPrices(List<String> keys)
     {
         String keystring = keysToString(keys);
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(PRICE_URL)
-                .queryParam(IDS_QUERYPARAM, keystring)
-                .queryParam(API_KEY_QUERYPARAM, API_KEY);
+        Map<String, String> queryParams = new TreeMap<>();
+        queryParams.put(IDS_QUERYPARAM, keystring);
+        queryParams.put(API_KEY_QUERYPARAM, API_KEY);
 
-        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocationBuilder.get();
-
-        PriceResponse priceResponse = response.readEntity(PriceResponse.class);
-
-        client.close();
+        PriceResponse priceResponse = invokeGetRequest(PRICE_URL, queryParams, PriceResponse.class);
 
         return priceResponse.getPrices();
     }
@@ -62,23 +54,17 @@ public class TankerkoenigClient {
             keystring = keystring.concat(keys.get(i));
             keystring =keystring.concat(",");
         }
-        return keystring.concat(keys.get(keys.size()));
+        return keystring.concat(keys.get(keys.size() -1));
     }
 
-    public DetailResponse getDetails(String uuid)
+    public Gasstation getDetails(String uuid)
     {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(DETAIL_URL)
-                .queryParam(ID_QUERYPARAM, uuid)
-                .queryParam(API_KEY_QUERYPARAM, API_KEY);
+        Map<String, String> queryParams = new TreeMap<>();
+        queryParams.put(ID_QUERYPARAM, uuid);
+        queryParams.put(API_KEY_QUERYPARAM, API_KEY);
 
-        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocationBuilder.get();
+        DetailResponse detailResponse = invokeGetRequest(DETAIL_URL, queryParams, DetailResponse.class);
 
-        DetailResponse detailResponse = response.readEntity(DetailResponse.class);
-
-        client.close();
-
-        return detailResponse;
+        return detailResponse.getStation();
     }
 }

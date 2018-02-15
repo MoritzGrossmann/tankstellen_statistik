@@ -1,7 +1,8 @@
 package database;
 
 import config.DatabaseConfig;
-import program.information.Logger;
+import program.cli.Logger;
+import program.database.DatabaseConfigurator;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,15 +12,14 @@ import java.sql.Statement;
 /**
  * Created by mgrossmann on 14.02.2018.
  */
-public class DatabaseCreator extends DatabaseHelper {
+public class DatabaseCreator extends DatabaseHelper implements DatabaseConfigurator{
 
     public DatabaseCreator(DatabaseConfig databaseConfig, Logger logger)
     {
         super(databaseConfig,logger);
     }
 
-    public void create()
-    {
+    public void create() {
         logger.printInformation("try to create tables");
         try {
             createTables();
@@ -28,9 +28,7 @@ public class DatabaseCreator extends DatabaseHelper {
         {
             logger.printError(String.format("cannot creating tables. Exception: %s", databaseConfig.getName(), e.getMessage()));
         }
-        logger.printInformation("tables created successful");
     }
-
 
     private void createTables() throws SQLException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         if (!tableExist(GASSTATION_TABLE))
@@ -48,7 +46,7 @@ public class DatabaseCreator extends DatabaseHelper {
         }
     }
 
-    public void dropTables()  {
+    public void purge()  {
         logger.printInformation("trying to drop Tables");
         try {
             dropTable(PRICE_TABLE);
@@ -57,7 +55,6 @@ public class DatabaseCreator extends DatabaseHelper {
         {
             logger.printError(String.format("cannot drop tables. Exception: %s", databaseConfig.getName(), e.getMessage()));
         }
-        logger.printInformation("tables dropped successful");
     }
 
     private void dropTable(String table) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
@@ -73,10 +70,9 @@ public class DatabaseCreator extends DatabaseHelper {
             statement = connection.createStatement();
             logger.printInformation(String.format("trying to drop table %s", table));
             statement.execute(sql);
-            logger.printInformation(String.format("table %s dropped successful", table));
+            logger.printSuccess(String.format("table %s dropped successful", table));
         } catch (SQLException e) {
-            logger.printError(String.format("Cannot drop table %s", table));
-            throw e;
+            logger.printWarning(String.format("Cannot drop table %s %s", table, e.getMessage()));
         } finally {
             statement.close();
             connection.close();
@@ -106,8 +102,7 @@ public class DatabaseCreator extends DatabaseHelper {
         }
     }
 
-    private void createDatabase() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
-    {
+    private void createDatabase() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         Class.forName(JDBC_DRIVER).newInstance();
 
         Statement statement = null;
@@ -136,22 +131,24 @@ public class DatabaseCreator extends DatabaseHelper {
         Statement statement = null;
         Connection connection = null;
 
-        String sql = "CREATE TABLE " + databaseConfig.getName() + "." + GASSTATION_TABLE + " ( " +
-                "id INT NOT NULL AUTO_INCREMENT, " +
-                "uuid VARCHAR(50), " +
-                "name VARCHAR(50), " +
-                "street VARCHAR(50), " +
-                "postcode VARCHAR(5), " +
-                "city VARCHAR(50), " +
-                "PRIMARY KEY (id)" +
-                ")";
+        String sql = String.format("CREATE TABLE %s.%s (%s INT NOT NULL AUTO_INCREMENT, %s VARCHAR(50),  %s VARCHAR(50), %s VARCHAR(50), %s VARCHAR(5),  %s VARCHAR(50), PRIMARY KEY (%s))",
+                databaseConfig.getName(),
+                GASSTATION_TABLE,
+                GasstationEntitites.ID_PROPERTY,
+                GasstationEntitites.UUID_PROPERTY,
+                GasstationEntitites.NAME_PROPERTY,
+                GasstationEntitites.STREET_PROPERTY,
+                GasstationEntitites.POSTCODE_PROPERTY,
+                GasstationEntitites.CITY_PROPERTY,
+                GasstationEntitites.ID_PROPERTY
+        );
 
         try {
             connection = createConnection();
             statement = connection.createStatement();
             logger.printInformation(String.format("trying to create table %s", GASSTATION_TABLE));
             statement.execute(sql);
-            logger.printInformation(String.format("table %s created successful", GASSTATION_TABLE));
+            logger.printSuccess(String.format("table %s created successful", GASSTATION_TABLE));
         } catch (SQLException e) {
             logger.printError(String.format("cannot create table %s", GASSTATION_TABLE));
             throw e;
@@ -167,22 +164,24 @@ public class DatabaseCreator extends DatabaseHelper {
         Statement statement = null;
         Connection connection = null;
 
-        String sql = "CREATE TABLE " + databaseConfig.getName() + "." + PRICE_TABLE + " ( " +
-                "id INT NOT NULL AUTO_INCREMENT, " +
-                "gasstation INT NOT NULL, " +
-                "e5 DECIMAL(8,3) NOT NULL DEFAULT '0.0', " +
-                "e1 DECIMAL(8,3) NOT NULL DEFAULT '0.0', " +
-                "diesel DECIMAL(8,3) NOT NULL DEFAULT '0.0', " +
-                "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP() , " +
-                "PRIMARY KEY (id)" +
-                ")";
+        String sql = String.format("CREATE TABLE %s.%s (%s INT NOT NULL AUTO_INCREMENT, %s INT NOT NULL,  %s DECIMAL(8,3) NOT NULL DEFAULT '0.0', %s DECIMAL(8,3) NOT NULL DEFAULT '0.0', %s DECIMAL(8,3) NOT NULL DEFAULT '0.0',  %s TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), PRIMARY KEY (%s))",
+                databaseConfig.getName(),
+                PRICE_TABLE,
+                GasstationEntitites.ID_PROPERTY,
+                GasstationEntitites.GASSTAION_PROPERTY,
+                GasstationEntitites.E5_PROPERTY,
+                GasstationEntitites.E10_PROPERTY,
+                GasstationEntitites.DIESEL_PROPERTY,
+                GasstationEntitites.TIMESTAMP_PROPERTY,
+                GasstationEntitites.ID_PROPERTY
+        );
 
         try {
             connection = createConnection();
             statement = connection.createStatement();
             logger.printInformation(String.format("trying to create table %s", PRICE_TABLE));
             statement.execute(sql);
-            logger.printInformation(String.format("table %s created successful", PRICE_TABLE));
+            logger.printSuccess(String.format("table %s created successful", PRICE_TABLE));
         } catch (SQLException e) {
             logger.printError(String.format("cannot create table %s", PRICE_TABLE));
             throw e;
@@ -192,8 +191,7 @@ public class DatabaseCreator extends DatabaseHelper {
         }
     }
 
-    private void addForeignKey()  throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
-    {
+    private void addForeignKey()  throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         Class.forName(JDBC_DRIVER).newInstance();
 
         Statement statement = null;
@@ -206,7 +204,7 @@ public class DatabaseCreator extends DatabaseHelper {
             statement = connection.createStatement();
             logger.printInformation(String.format("trying to create foreign key  on %s", PRICE_TABLE));
             statement.execute(sql);
-            logger.printInformation("foreign key created successful");
+            logger.printSuccess("foreign key created successful");
         } catch (SQLException e) {
             logger.printError("cannot create foreign key");
             throw e;

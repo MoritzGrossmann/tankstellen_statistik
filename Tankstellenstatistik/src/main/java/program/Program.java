@@ -1,18 +1,22 @@
 package program;
 
+import cache.GasstationCache;
+import cache.GasstationCacheFiller;
 import client.Gasstation;
 import client.tankerkoenig.TankerkoenigClient;
-import client.tankerkoenig.TankerkoenigResponse;
-import client.tankerkoenig.detail.*;
 import config.*;
 import database.ConnectionTester;
 import database.DatabaseCreator;
 import database.GasstationEntitites;
 import org.apache.commons.cli.*;
-import program.cli.CliHandler;
+import cli.CliHandler;
+import program.api.TankerkoenigApiClient;
+import program.database.DatabaseTester;
+import program.database.GasstationRepository;
+import program.database.PriceRepository;
+import program.module.Collector;
 import system.NotSupportedException;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -21,9 +25,9 @@ import java.sql.SQLException;
  */
 public class Program {
 
-    public static final String PROGRAM_NAME = "Tankstellen-Statistik-Collector";
+    static final String PROGRAM_NAME = "Tankstellen-Statistik-Collector";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         CommandLine commandLine;
 
         CliHandler logger = new CliHandler();
@@ -41,7 +45,11 @@ public class Program {
             {
                 if (commandLine.hasOption("p"))
                 {
-                    new ConfigurationHandler().purge(logger);
+                    logger.printOption("Do you really want to purge the Configuration?");
+                    if (logger.question())
+                    {
+                        new ConfigurationHandler().purge(logger);
+                    }
                 } else {
                     new ConfigurationHandler().configure(logger);
                 }
@@ -58,7 +66,11 @@ public class Program {
                 }
 
                 if (commandLine.hasOption("p")) {
-                    new DatabaseCreator(databaseConfig, logger).dropTables();
+                    logger.printOption("do you really want to purge the Database?");
+                    if (logger.question())
+                    {
+                        new DatabaseCreator(databaseConfig, logger).purge();
+                    }
                 } else {
                     new DatabaseCreator(databaseConfig, logger).create();
                 }
@@ -72,45 +84,36 @@ public class Program {
 
                 apiConfig = ApiConfig.getInstance();
 
-                TankerkoenigClient client = new TankerkoenigClient(apiConfig.getApiKey().getValue());
+                DatabaseTester connectionTester = new ConnectionTester(databaseConfig, logger);
 
-                GasstationEntitites gasstationEntitites = new GasstationEntitites(databaseConfig, logger);
-
-                for (String uuid : gasstationConfig.getGasstations())
+                if (connectionTester.testConnection())
                 {
-                    if (!gasstationEntitites.exist(uuid))
-                    {
-                        logger.printInformation(String.format("trying to collect Data for Gasstation %s", uuid));
-                        client.tankerkoenig.detail.Gasstation gs = client.getDetails(uuid).getStation();
-                        Gasstation gasstation = new Gasstation();
-                        gasstation.setName(gs.getName());
-                        gasstation.setUuid(uuid);
-                        gasstation.setStreet(gs.getStreet());
-                        gasstation.setCity(gs.getPlace());
-                        gasstation.setPostcode(String.valueOf(gs.getPostCode()));
+                    TankerkoenigApiClient client = new TankerkoenigClient(apiConfig.getApiKey().getValue(), logger);
 
-                        gasstationEntitites.push(gasstation);
+                    GasstationRepository gasstationEntitites = new GasstationEntitites(databaseConfig, logger);
+
+                    PriceRepository priceRepository = new GasstationEntitites(databaseConfig, logger);
+
+                    GasstationRepository cache = new GasstationCacheFiller().generateCache(gasstationEntitites, client, logger, gasstationConfig);
+
+                    logger.printSuccess("cache filled");
+
+                    logger.printOption("Do you want to run the Collector?");
+                    boolean collect = logger.question();
+                    if (collect)
+                    {
+                        new Collector(cache, priceRepository,logger, client).collectData();
                     }
                 }
             }
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | ConfigNotValidException e) {
             System.exit(1);
-        } catch (ConfigCreatedException e) {
-            logger.printError(e.getMessage());
-        } catch (IOException e) {
-            logger.printError(e.getMessage());
-        } catch (NotSupportedException e) {
-            logger.printError(e.getMessage());
-        } catch (ConfigNotValidException e) {
-            System.exit(1);
-        } catch (IllegalAccessException e) {
-            logger.printError(e.getMessage());
-        } catch (InstantiationException e) {
-            logger.printError(e.getMessage());
-        } catch (SQLException e) {
+        } catch (ConfigCreatedException | IOException | NotSupportedException | InstantiationException | IllegalAccessException | SQLException e) {
             logger.printError(e.getMessage());
         } catch (ClassNotFoundException e) {
             logger.printError(e.getMessage());
+        } finally {
+            Thread.sleep(20);
         }
     }
 }

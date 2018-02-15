@@ -1,4 +1,4 @@
-package program.information;
+package program.cli;
 
 /**
  * Created by mgrossmann on 14.02.2018.

@@ -1,14 +1,13 @@
 package database;
 
 import config.DatabaseConfig;
-import program.information.Logger;
-
-import java.sql.Connection;
+import program.cli.Logger;
+import program.database.DatabaseTester;
 
 /**
  * Created by mgrossmann on 14.02.2018.
  */
-public class ConnectionTester extends DatabaseHelper {
+public class ConnectionTester extends DatabaseHelper implements DatabaseTester {
 
     public ConnectionTester(DatabaseConfig databaseConfig, Logger logger) {
         super(databaseConfig, logger);
@@ -18,7 +17,7 @@ public class ConnectionTester extends DatabaseHelper {
     {
         try {
             Class.forName(JDBC_DRIVER).newInstance();
-            Connection connection = createConnection();
+            createConnection();
         } catch (Exception e)
         {
             logger.printError(e.getMessage());

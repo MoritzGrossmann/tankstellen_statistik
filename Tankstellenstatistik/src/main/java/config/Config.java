@@ -1,7 +1,7 @@
 package config;
 
-import program.cli.CliHandler;
-import program.information.Logger;
+import cli.CliHandler;
+import program.cli.Logger;
 import system.DirectoryManager;
 import system.NotSupportedException;
 import system.SystemEnvironment;

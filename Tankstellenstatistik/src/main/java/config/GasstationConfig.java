@@ -1,8 +1,8 @@
 package config;
 
+import config.model.Gasstation;
 import org.apache.commons.lang3.StringUtils;
-import program.cli.CliHandler;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import cli.CliHandler;
 import system.NotSupportedException;
 
 import java.io.FileOutputStream;
@@ -53,7 +53,7 @@ public class GasstationConfig extends Config {
 
         boolean continueWithGasstation = false;
 
-        cliHandler.printInformation("Do you want add more gasstation? [yes/no]");
+        cliHandler.printOption("Do you want add more gasstation?");
         continueWithGasstation = cliHandler.question();
 
         while (continueWithGasstation)
@@ -63,7 +63,7 @@ public class GasstationConfig extends Config {
             if (!gasstation.isValid())cliHandler.printWarning("No valid gasstation");
 
             gasstationstring += ("," + gasstation.getValue());
-            cliHandler.printInformation("Do you want add more gasstation? [yes/no]");
+            cliHandler.printOption("Do you want add more gasstation?");
             continueWithGasstation = cliHandler.question();
         }
 

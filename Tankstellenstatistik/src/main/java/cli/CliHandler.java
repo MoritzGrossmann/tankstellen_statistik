@@ -1,8 +1,8 @@
-package program.cli;
+package cli;
 
 import org.apache.commons.lang3.StringUtils;
-import program.information.InputHandler;
-import program.information.Logger;
+import program.cli.InputHandler;
+import program.cli.Logger;
 
 import java.util.Calendar;
 import java.util.Scanner;
@@ -28,6 +28,10 @@ public class CliHandler implements Logger, InputHandler{
 
     private static final String ERROR_PREFIX = "[ERROR]";
 
+    private static final String SUCCESS_PREFIX = "[SUCCESS]";
+
+    private static final String OPTION_PREFIX = "[OPTION]";
+
     private final Scanner scanner = new Scanner(System.in);
 
     private String getTimeString()
@@ -46,6 +50,16 @@ public class CliHandler implements Logger, InputHandler{
 
     public void printError(String text) {
         System.out.printf("%s %s%s%s: %s\n", getTimeString(), ANSI_RED, ERROR_PREFIX, ANSI_RESET,text);
+    }
+
+    public void printSuccess(String text)
+    {
+        System.out.printf("%s %s%s%s: %s\n", getTimeString(), ANSI_GREEN, SUCCESS_PREFIX, ANSI_RESET,text);
+    }
+
+    @Override
+    public void printOption(String text) {
+        System.out.printf("%s %s%s%s: %s [yes/no]\n", getTimeString(), ANSI_CYAN, OPTION_PREFIX, ANSI_RESET,text);
     }
 
     public String input() {

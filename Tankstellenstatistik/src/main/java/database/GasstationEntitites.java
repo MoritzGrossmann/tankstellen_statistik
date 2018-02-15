@@ -2,22 +2,50 @@ package database;
 
 import client.Gasstation;
 import config.DatabaseConfig;
-import program.information.Logger;
+import model.GasstationPrices;
+import program.cli.Logger;
+import program.database.GasstationRepository;
+import program.database.PriceRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by mgrossmann on 13.02.2018.
  */
-public class GasstationEntitites extends DatabaseHelper {
+public class GasstationEntitites extends DatabaseHelper implements GasstationRepository, PriceRepository {
+
+    public static final String ID_PROPERTY = "id";
+
+    public static final String UUID_PROPERTY = "uuid";
+
+    public static final String NAME_PROPERTY = "name";
+
+    public static final String STREET_PROPERTY = "street";
+
+    public static final String POSTCODE_PROPERTY = "postcode";
+
+    public static final String CITY_PROPERTY = "city";
+
+    public static final String GASSTAION_PROPERTY = "gasstation";
+
+    public static final String E5_PROPERTY = "e5";
+
+    public static final String E10_PROPERTY = "e10";
+
+    public static final String DIESEL_PROPERTY = "diesel";
+
+    public static final String TIMESTAMP_PROPERTY = "timestamp";
 
     public GasstationEntitites(DatabaseConfig databaseConfig, Logger logger)
     {
         super(databaseConfig, logger);
     }
 
+    @Override
     public Gasstation push(Gasstation gasstation) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
         ResultSet resultSet = null;
@@ -26,7 +54,7 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = String.format("INSERT INTO %s (uuid, name, street, postcode, city) values (?,?,?,?,?)", GASSTATION_TABLE);
+        String sql = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) values (?,?,?,?,?)", GASSTATION_TABLE, UUID_PROPERTY, NAME_PROPERTY, STREET_PROPERTY, POSTCODE_PROPERTY, CITY_PROPERTY);
 
         PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -48,6 +76,7 @@ public class GasstationEntitites extends DatabaseHelper {
         return gasstation;
     }
 
+    @Override
     public boolean exist(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
         ResultSet resultSet = null;
@@ -56,7 +85,7 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = "SELECT * FROM " + GASSTATION_TABLE +  " WHERE uuid = ?";
+        String sql = String.format("SELECT * FROM %s WHERE %s = ?",GASSTATION_TABLE, UUID_PROPERTY);
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, key);
@@ -68,6 +97,7 @@ public class GasstationEntitites extends DatabaseHelper {
         return res;
     }
 
+    @Override
     public int getId(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException
     {
         ResultSet resultSet = null;
@@ -76,7 +106,7 @@ public class GasstationEntitites extends DatabaseHelper {
 
         connection = createConnection();
 
-        String sql = "SELECT * FROM " + GASSTATION_TABLE +  " WHERE uuid = ?";
+        String sql = String.format("SELECT * FROM %s WHERE %s = ?",GASSTATION_TABLE, UUID_PROPERTY);
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, key);
@@ -85,9 +115,101 @@ public class GasstationEntitites extends DatabaseHelper {
         resultSet = statement.getResultSet();
         if (resultSet.next())
         {
-            return resultSet.getInt("id");
+            connection.close();
+            return resultSet.getInt(ID_PROPERTY);
         }
 
+        connection.close();
+        resultSet.close();
+
         return 0;
+    }
+
+    @Override
+    public Gasstation get(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+        Gasstation gasstation = new Gasstation();
+        ResultSet resultSet = null;
+
+        Class.forName(JDBC_DRIVER).newInstance();
+
+        connection = createConnection();
+
+        String sql = String.format("SELECT * FROM %s WHERE %s = ?",GASSTATION_TABLE, UUID_PROPERTY);
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1,key);
+        statement.execute();
+
+        resultSet = statement.getResultSet();
+        if (resultSet.next())
+        {
+            gasstation.setId(resultSet.getInt(ID_PROPERTY));
+            gasstation.setUuid(resultSet.getString(UUID_PROPERTY));
+            gasstation.setName(resultSet.getString(NAME_PROPERTY));
+            gasstation.setStreet(resultSet.getString(STREET_PROPERTY));
+            gasstation.setPostcode(resultSet.getString(POSTCODE_PROPERTY));
+            gasstation.setCity(resultSet.getString(CITY_PROPERTY));
+        }
+
+        resultSet.close();
+        connection.close();
+        return gasstation;
+    }
+
+    @Override
+    public Collection<Gasstation> getAll() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+
+        Collection<Gasstation> gasstations = new ArrayList<>();
+
+        ResultSet resultSet = null;
+
+        Class.forName(JDBC_DRIVER).newInstance();
+
+        connection = createConnection();
+
+        String sql = String.format("SELECT * FROM %s", GASSTATION_TABLE);
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.execute();
+
+        resultSet = statement.getResultSet();
+
+        while(resultSet.next())
+        {
+            Gasstation gasstation = new Gasstation();
+            gasstation.setId(resultSet.getInt(ID_PROPERTY));
+            gasstation.setUuid(resultSet.getString(UUID_PROPERTY));
+            gasstation.setName(resultSet.getString(NAME_PROPERTY));
+            gasstation.setPostcode(resultSet.getString(POSTCODE_PROPERTY));
+            gasstation.setStreet(resultSet.getString(STREET_PROPERTY));
+            gasstation.setCity(resultSet.getString(CITY_PROPERTY));
+            gasstations.add(gasstation);
+        }
+
+        resultSet.close();
+        connection.close();
+        return gasstations;
+    }
+
+    @Override
+    public void pushPrices(GasstationPrices gasstaionPrices) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+
+        Class.forName(JDBC_DRIVER).newInstance();
+
+        connection = createConnection();
+
+        String sql = String.format("INSERT INTO %s (%s, %s, %s, %s) values (?,?,?,?)", PRICE_TABLE, GASSTAION_PROPERTY, E5_PROPERTY, E10_PROPERTY, DIESEL_PROPERTY);
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, gasstaionPrices.getGasstation());
+        statement.setDouble(2, gasstaionPrices.getE5());
+        statement.setDouble(3, gasstaionPrices.getE10());
+        statement.setDouble(4, gasstaionPrices.getDiesel());
+
+        statement.execute();
+
+        connection.close();
     }
 }

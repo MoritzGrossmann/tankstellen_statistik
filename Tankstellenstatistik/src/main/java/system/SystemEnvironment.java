@@ -18,25 +18,25 @@ public class SystemEnvironment {
 
     private boolean isWindows() {
 
-        return (OS.indexOf("win") >= 0);
+        return (OS.contains("win"));
 
     }
 
     private boolean isMac() {
 
-        return (OS.indexOf("mac") >= 0);
+        return (OS.contains("mac"));
 
     }
 
     private boolean isUnix() {
 
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+        return (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
 
     }
 
     private boolean isSolaris() {
 
-        return (OS.indexOf("sunos") >= 0);
+        return (OS.contains("sunos"));
     }
 }
 

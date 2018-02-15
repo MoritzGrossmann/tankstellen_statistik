@@ -1,9 +1,8 @@
 package database;
 
 import config.DatabaseConfig;
-import program.information.Logger;
+import program.cli.Logger;
 
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,21 +10,21 @@ import java.sql.SQLException;
 /**
  * Created by mgrossmann on 13.02.2018.
  */
-public abstract class DatabaseHelper {
+abstract class DatabaseHelper {
 
-    public DatabaseHelper(DatabaseConfig databaseConfig, Logger logger)
+    DatabaseHelper(DatabaseConfig databaseConfig, Logger logger)
     {
         this.databaseConfig = databaseConfig;
         this.logger = logger;
     }
 
-    protected Connection connection;
+    Connection connection;
 
-    protected DatabaseConfig databaseConfig;
+    DatabaseConfig databaseConfig;
 
     protected Logger logger;
 
-    protected Connection createConnection() throws SQLException
+    Connection createConnection() throws SQLException
     {
         String databaseString = String.format("jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=%s",
                 databaseConfig.getHost(),
@@ -37,9 +36,9 @@ public abstract class DatabaseHelper {
         return DriverManager.getConnection( databaseString, databaseConfig.getUser(), databaseConfig.getPassword() );
     }
 
-    protected final String GASSTATION_TABLE = "gasstations";
+    final String GASSTATION_TABLE = "gasstations";
 
-    protected final String PRICE_TABLE = "prices";
+    final String PRICE_TABLE = "prices";
 
-    protected final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 }

@@ -1,7 +1,7 @@
 package config;
 
 import config.model.*;
-import program.cli.CliHandler;
+import cli.CliHandler;
 import system.NotSupportedException;
 
 import java.io.FileOutputStream;

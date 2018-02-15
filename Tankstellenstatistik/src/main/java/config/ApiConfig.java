@@ -2,7 +2,7 @@ package config;
 
 import config.model.ApiKey;
 import config.model.ConfigModel;
-import program.cli.CliHandler;
+import cli.CliHandler;
 import system.NotSupportedException;
 import java.io.FileOutputStream;
 import java.io.IOException;
