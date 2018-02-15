@@ -18,27 +18,27 @@ import java.util.Collection;
  */
 public class GasstationEntitites extends DatabaseHelper implements GasstationRepository, PriceRepository {
 
-    public static final String ID_PROPERTY = "id";
+    static final String ID_PROPERTY = "id";
 
-    public static final String UUID_PROPERTY = "uuid";
+    static final String UUID_PROPERTY = "uuid";
 
-    public static final String NAME_PROPERTY = "name";
+    static final String NAME_PROPERTY = "name";
 
-    public static final String STREET_PROPERTY = "street";
+    static final String STREET_PROPERTY = "street";
 
-    public static final String POSTCODE_PROPERTY = "postcode";
+    static final String POSTCODE_PROPERTY = "postcode";
 
-    public static final String CITY_PROPERTY = "city";
+    static final String CITY_PROPERTY = "city";
 
-    public static final String GASSTAION_PROPERTY = "gasstation";
+    static final String GASSTAION_PROPERTY = "gasstation";
 
-    public static final String E5_PROPERTY = "e5";
+    static final String E5_PROPERTY = "e5";
 
-    public static final String E10_PROPERTY = "e10";
+    static final String E10_PROPERTY = "e10";
 
-    public static final String DIESEL_PROPERTY = "diesel";
+    static final String DIESEL_PROPERTY = "diesel";
 
-    public static final String TIMESTAMP_PROPERTY = "timestamp";
+    static final String TIMESTAMP_PROPERTY = "timestamp";
 
     public GasstationEntitites(DatabaseConfig databaseConfig, Logger logger)
     {

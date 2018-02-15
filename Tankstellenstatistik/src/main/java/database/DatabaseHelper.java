@@ -26,7 +26,7 @@ abstract class DatabaseHelper {
 
     Connection createConnection() throws SQLException
     {
-        String databaseString = String.format("jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=%s",
+        String databaseString = String.format("jdbc:mysql://%s:%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=%s&useSSL=false",
                 databaseConfig.getHost(),
                 databaseConfig.getPort(),
                 databaseConfig.getName(),

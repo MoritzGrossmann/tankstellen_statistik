@@ -108,8 +108,18 @@ public class Program {
             }
         } catch (IllegalArgumentException | ConfigNotValidException e) {
             System.exit(1);
-        } catch (ConfigCreatedException | IOException | NotSupportedException | InstantiationException | IllegalAccessException | SQLException e) {
+        } catch (ConfigCreatedException e) {
             logger.printError(e.getMessage());
+        } catch (IOException e) {
+            logger.printError(e.getMessage());
+        } catch (NotSupportedException e) {
+            logger.printError(e.getMessage());
+        } catch (InstantiationException e) {
+            logger.printError(e.getMessage());
+        } catch (IllegalAccessException e) {
+            logger.printError(e.getMessage());
+        } catch (SQLException e) {
+            logger.printError(e.getMessage() + e.getSQLState() + e.getLocalizedMessage() + e.getStackTrace());
         } catch (ClassNotFoundException e) {
             logger.printError(e.getMessage());
         } finally {

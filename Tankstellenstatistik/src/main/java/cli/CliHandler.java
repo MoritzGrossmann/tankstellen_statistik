@@ -40,18 +40,22 @@ public class CliHandler implements Logger, InputHandler{
         return calendar.getTime().toString();
     }
 
+    @Override
     public void printInformation(String text) {
         System.out.printf("%s %s: %s\n", getTimeString(), INFORMATION_PREFIX, text);
     }
 
+    @Override
     public void printWarning(String text) {
         System.out.printf("%s %s%s%s: %s\n", getTimeString(),ANSI_YELLOW, WARNING_PREFIX, ANSI_RESET, text);
     }
 
+    @Override
     public void printError(String text) {
         System.out.printf("%s %s%s%s: %s\n", getTimeString(), ANSI_RED, ERROR_PREFIX, ANSI_RESET,text);
     }
 
+    @Override
     public void printSuccess(String text)
     {
         System.out.printf("%s %s%s%s: %s\n", getTimeString(), ANSI_GREEN, SUCCESS_PREFIX, ANSI_RESET,text);
@@ -62,6 +66,7 @@ public class CliHandler implements Logger, InputHandler{
         System.out.printf("%s %s%s%s: %s [yes/no]\n", getTimeString(), ANSI_CYAN, OPTION_PREFIX, ANSI_RESET,text);
     }
 
+    @Override
     public String input() {
         String input = "";
         while (input.trim().equals(StringUtils.EMPTY)) {
@@ -72,6 +77,7 @@ public class CliHandler implements Logger, InputHandler{
         return input;
     }
 
+    @Override
     public String password()
     {
         String input = "";
@@ -83,6 +89,7 @@ public class CliHandler implements Logger, InputHandler{
         return input;
     }
 
+    @Override
     public boolean question()
     {
         String answer = scanner.next();
