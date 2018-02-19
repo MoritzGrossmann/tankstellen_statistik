@@ -1,6 +1,6 @@
 package com.grossmann.gasstation.collector.database;
 
-import com.grossmann.gasstation.collector.client.Gasstation;
+import com.grossmann.gasstation.collector.model.Gasstation;
 import com.grossmann.gasstation.collector.config.DatabaseConfig;
 import com.grossmann.gasstation.collector.model.GasstationPrices;
 import com.grossmann.gasstation.collector.program.cli.Logger;

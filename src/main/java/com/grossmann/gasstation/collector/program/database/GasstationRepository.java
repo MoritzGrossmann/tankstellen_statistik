@@ -1,6 +1,6 @@
 package com.grossmann.gasstation.collector.program.database;
 
-import com.grossmann.gasstation.collector.client.Gasstation;
+import com.grossmann.gasstation.collector.model.Gasstation;
 
 import java.sql.SQLException;
 import java.util.Collection;

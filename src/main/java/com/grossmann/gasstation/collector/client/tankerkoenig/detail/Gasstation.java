@@ -18,6 +18,8 @@ public class Gasstation {
 
     private String place;
 
+    private String brand;
+
     public String getName() {
         return name;
     }
@@ -56,5 +58,13 @@ public class Gasstation {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

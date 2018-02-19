@@ -12,7 +12,7 @@ public class DatabaseConfig extends Config {
 
     public static final String HOST_PROPERTY = "DATABASE_HOST";
 
-    public static final String PORT_PROPERTY = "DATABSE_PORT";
+    public static final String PORT_PROPERTY = "DATABASE_PORT";
 
     public static final String NAME_PROPERTY = "DATABASE_NAME";
 

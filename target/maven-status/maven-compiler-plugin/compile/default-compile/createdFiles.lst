@@ -2,9 +2,11 @@ com\grossmann\gasstation\collector\config\model\Host.class
 com\grossmann\gasstation\collector\program\database\PriceRepository.class
 com\grossmann\gasstation\collector\config\GasstationConfig.class
 com\grossmann\gasstation\collector\program\module\Collector.class
+com\grossmann\gasstation\collector\core\RequestMethod.class
 com\grossmann\gasstation\collector\program\ConfigurationHandler.class
 com\grossmann\gasstation\collector\client\tankerkoenig\TankerkoenigResponse.class
 com\grossmann\gasstation\collector\program\OptionHandler.class
+com\grossmann\gasstation\collector\core\PostcodeFormatter.class
 com\grossmann\gasstation\collector\config\Config.class
 com\grossmann\gasstation\collector\config\DatabaseConfig.class
 com\grossmann\gasstation\collector\config\model\ApiKey.class
@@ -12,6 +14,7 @@ com\grossmann\gasstation\collector\program\database\CacheFiller.class
 com\grossmann\gasstation\collector\App.class
 com\grossmann\gasstation\collector\system\NotSupportedException.class
 com\grossmann\gasstation\collector\database\ConnectionTester.class
+com\grossmann\gasstation\collector\model\Gasstation.class
 com\grossmann\gasstation\collector\model\GasstationPrices.class
 com\grossmann\gasstation\collector\config\model\Timezone.class
 com\grossmann\gasstation\collector\client\tankerkoenig\price\Gasstation.class
@@ -32,7 +35,6 @@ com\grossmann\gasstation\collector\config\model\ConfigModel.class
 com\grossmann\gasstation\collector\core\StringUtils.class
 com\grossmann\gasstation\collector\database\DatabaseHelper.class
 com\grossmann\gasstation\collector\program\api\TankerkoenigApiClient.class
-com\grossmann\gasstation\collector\client\Gasstation.class
 com\grossmann\gasstation\collector\system\OperatingSystem.class
 com\grossmann\gasstation\collector\cache\GasstationCache.class
 com\grossmann\gasstation\collector\config\model\Port.class
@@ -45,6 +47,7 @@ com\grossmann\gasstation\collector\config\model\Database.class
 com\grossmann\gasstation\collector\system\SystemEnvironment.class
 com\grossmann\gasstation\collector\program\cli\Logger.class
 com\grossmann\gasstation\collector\program\database\GasstationRepository.class
+com\grossmann\gasstation\collector\core\Request.class
 com\grossmann\gasstation\collector\program\database\DatabaseTester.class
 com\grossmann\gasstation\collector\cache\GasstationCacheFiller.class
 com\grossmann\gasstation\collector\database\DatabaseCreator.class

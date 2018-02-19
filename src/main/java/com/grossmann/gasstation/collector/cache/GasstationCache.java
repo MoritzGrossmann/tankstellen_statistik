@@ -1,9 +1,8 @@
 package com.grossmann.gasstation.collector.cache;
 
-import com.grossmann.gasstation.collector.client.Gasstation;
+import com.grossmann.gasstation.collector.model.Gasstation;
 import com.grossmann.gasstation.collector.program.database.GasstationRepository;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,18 +20,18 @@ public class GasstationCache implements GasstationRepository {
     }
 
     @Override
-    public Gasstation push(Gasstation gasstation) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public Gasstation push(Gasstation gasstation) {
         gasstations.put(gasstation.getUuid(), gasstation);
         return gasstation;
     }
 
     @Override
-    public boolean exist(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public boolean exist(String key) {
         return gasstations.containsKey(key);
     }
 
     @Override
-    public int getId(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public int getId(String key) {
         if (exist(key))
         {
             return gasstations.get(key).getId();
@@ -43,12 +42,12 @@ public class GasstationCache implements GasstationRepository {
     }
 
     @Override
-    public Gasstation get(String key) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public Gasstation get(String key) {
         return gasstations.get(key);
     }
 
     @Override
-    public Collection<Gasstation> getAll() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public Collection<Gasstation> getAll() {
         return gasstations.values();
     }
 }

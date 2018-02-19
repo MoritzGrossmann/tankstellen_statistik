@@ -51,8 +51,8 @@ public class Collector implements Runnable {
             List<String> uuids = new ArrayList<>();
 
             try {
-                Collection<com.grossmann.gasstation.collector.client.Gasstation> list = gasstations.getAll();
-                for (com.grossmann.gasstation.collector.client.Gasstation gs : list) {
+                Collection<com.grossmann.gasstation.collector.model.Gasstation> list = gasstations.getAll();
+                for (com.grossmann.gasstation.collector.model.Gasstation gs : list) {
                     uuids.add(gs.getUuid());
                 }
 
