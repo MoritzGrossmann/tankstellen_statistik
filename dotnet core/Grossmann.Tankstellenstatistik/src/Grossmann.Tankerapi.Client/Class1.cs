@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RestSharp;
 
@@ -17,9 +18,13 @@ namespace Grossmann.Tankerapi.Client
         }   
     }
 
-    public interface ITankerapiRequest
+    public abstract class ITankerapiRequest
     {
-        RestRequest GetRequest(string apiKey);
+        protected string ApiKey { get; set; }
+
+        internal abstract RestRequest GetRequest(string apiKey);
+
+        protected const string ApiKeyParameter = "apikey";
     }
 
     public class PriceRequest : ITankerapiRequest
@@ -28,11 +33,11 @@ namespace Grossmann.Tankerapi.Client
             
         public List<GasStationId> GasStations { get; set; }
 
-        public RestRequest GetRequest(string apiKey)
+        internal override RestRequest GetRequest(string apiKey)
         {
             var request = new RestRequest("prices.php",Method.GET);
-
-            request.AddQueryParameter(IdsParameter, GasStations.Join(','));
+            request.AddQueryParameter(IdsParameter, String.Join(",", GasStations));
+            request.AddQueryParameter(ApiKeyParameter, apiKey);
             return request;
         }
     }
