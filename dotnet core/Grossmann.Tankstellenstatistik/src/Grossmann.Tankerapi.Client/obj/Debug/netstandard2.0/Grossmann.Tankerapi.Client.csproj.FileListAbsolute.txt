@@ -1,0 +1,9 @@
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\bin\Debug\netstandard2.0\Grossmann.Tankerapi.Client.deps.json
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\bin\Debug\netstandard2.0\Grossmann.Tankerapi.Client.dll
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.csprojAssemblyReference.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.csproj.CoreCompileInputs.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.AssemblyInfoInputs.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.AssemblyInfo.cs
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\bin\Debug\netstandard2.0\Grossmann.Tankerapi.Client.pdb
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.dll
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client\obj\Debug\netstandard2.0\Grossmann.Tankerapi.Client.pdb

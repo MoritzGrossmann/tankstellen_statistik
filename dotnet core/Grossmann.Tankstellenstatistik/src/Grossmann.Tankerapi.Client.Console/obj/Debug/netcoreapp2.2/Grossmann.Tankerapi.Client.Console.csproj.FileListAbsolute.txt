@@ -1,0 +1,14 @@
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.deps.json
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.runtimeconfig.json
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.runtimeconfig.dev.json
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.dll
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.pdb
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.dll
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\bin\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.pdb
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.csprojAssemblyReference.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.csproj.CoreCompileInputs.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.AssemblyInfoInputs.cache
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.AssemblyInfo.cs
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.csproj.CopyComplete
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.dll
+D:\mgrossmann\Code\Privat\tankstellen_statistik\dotnet core\Grossmann.Tankstellenstatistik\src\Grossmann.Tankerapi.Client.Console\obj\Debug\netcoreapp2.2\Grossmann.Tankerapi.Client.Console.pdb

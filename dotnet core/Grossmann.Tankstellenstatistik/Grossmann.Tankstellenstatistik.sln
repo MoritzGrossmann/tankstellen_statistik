@@ -1,23 +1,46 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EDF95C31-20A4-41DE-BB4B-E99CC962E59E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{09A14E96-45AC-41BB-91DF-021D347E0393}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grossmann.Tankerapi.Client", "src\Grossmann.Tankerapi.Client\Grossmann.Tankerapi.Client.csproj", "{93FA2DFB-0707-43E0-818A-C74140C5B68F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grossmann.Tankerapi.Client", "src\Grossmann.Tankerapi.Client\Grossmann.Tankerapi.Client.csproj", "{93FA2DFB-0707-43E0-818A-C74140C5B68F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grossmann.Tankerapi.Client.Tests", "tests\Grossmann.Tankerapi.Client.Tests\Grossmann.Tankerapi.Client.Tests.csproj", "{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grossmann.Tankerapi.Client.Console", "src\Grossmann.Tankerapi.Client.Console\Grossmann.Tankerapi.Client.Console.csproj", "{052BA8C2-8276-42B3-A97E-0B77648285C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{93FA2DFB-0707-43E0-818A-C74140C5B68F} = {EDF95C31-20A4-41DE-BB4B-E99CC962E59E}
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{93FA2DFB-0707-43E0-818A-C74140C5B68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93FA2DFB-0707-43E0-818A-C74140C5B68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93FA2DFB-0707-43E0-818A-C74140C5B68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93FA2DFB-0707-43E0-818A-C74140C5B68F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{052BA8C2-8276-42B3-A97E-0B77648285C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052BA8C2-8276-42B3-A97E-0B77648285C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052BA8C2-8276-42B3-A97E-0B77648285C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052BA8C2-8276-42B3-A97E-0B77648285C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93FA2DFB-0707-43E0-818A-C74140C5B68F} = {EDF95C31-20A4-41DE-BB4B-E99CC962E59E}
+		{C776BA0A-9CA8-4D63-9982-99CEAA1BD80A} = {09A14E96-45AC-41BB-91DF-021D347E0393}
+		{052BA8C2-8276-42B3-A97E-0B77648285C4} = {EDF95C31-20A4-41DE-BB4B-E99CC962E59E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F7D029B-11F3-4DCF-9B45-998D2B941237}
 	EndGlobalSection
 EndGlobal
